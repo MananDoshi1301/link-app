@@ -6,19 +6,9 @@ const app = express();
 
 dotenv.config({ path: './config.env' });
 
-const DB = process.env.DATABASE;
 const PORT = process.env.PORT;
+require("./db/conn.js");
 
-mongoose.connect(DB, {
-  useNewUrlParser: true,
-  // useCreateIndex: true,
-  useUnifiedTopology: true,
-  // useFindAndModify: false
-}).then(() => {
-  console.log('Db connected!');
-}).catch((err) => {
-  console.log(err);
-})
 
 app.get('/', (req, res) => {
   res.send("Hello from server!");
