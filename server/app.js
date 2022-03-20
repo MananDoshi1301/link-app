@@ -1,8 +1,13 @@
+const dotenv = require("dotenv");
 const express = require("express");
 const mongoose = require("mongoose");
 
 const app = express();
-const DB = 'mongodb+srv://manandoshi1301:Manandoshidb@cluster0.m7n4b.mongodb.net/user?retryWrites=true&w=majority';
+
+dotenv.config({ path: './config.env' });
+
+const DB = process.env.DATABASE;
+const PORT = process.env.PORT;
 
 mongoose.connect(DB, {
   useNewUrlParser: true,
@@ -27,6 +32,6 @@ app.get('/signup', (req, res) => {
   res.send("Hello to signup from server!");
 })
 
-app.listen(3000, () => {
-  console.log("Server is running!"); ``
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}!`);
 })
