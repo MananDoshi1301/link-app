@@ -9,6 +9,8 @@ dotenv.config({ path: './config.env' });
 const PORT = process.env.PORT;
 require("./db/conn.js");
 
+// const User = require("./models/userSchema");
+
 
 app.get('/', (req, res) => {
   res.send("Hello from server!");
