@@ -54,11 +54,12 @@ router.post('/signup', async (req, res) => {
     if (userExist) {
       return res.status(422).json({ error: "Email already exists!" });
     }
+    else {
+      const user = new User({ email, password });
+      const savedUser = await user.save();
+      if (savedUser) res.status(201).json({ message: "User registered succesfully!" });
+    }
 
-    const user = new User({ email, password });
-    const savedUser = user.save();
-
-    if (savedUser) res.status(201).json({ message: "User registered succesfully!" });
   }
   catch (err) {
     console.log(err)
