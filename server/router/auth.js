@@ -10,25 +10,27 @@ router.get('/', (req, res) => {
 })
 
 
-router.post('/signup', (req, res) => {
-  const { email, password } = req.body;
-  if (!email || !password) {
-    return res.status(422).json({ error: "Plz fill all fields!" });
-  }
+// Using promises
 
-  User.findOne({ email: email })
-    .then((userExist) => {
-      if (userExist) {
-        return res.status(422).json({ error: "Email already exists!" });
-      }
+// router.post('/signup', (req, res) => {
+//   const { email, password } = req.body;
+//   if (!email || !password) {
+//     return res.status(422).json({ error: "Plz fill all fields!" });
+//   }
 
-      const user = new User({ email, password });
+//   User.findOne({ email: email })
+//     .then((userExist) => {
+//       if (userExist) {
+//         return res.status(422).json({ error: "Email already exists!" });
+//       }
 
-      user.save().then(() => {
-        res.status(201).json({ message: "User registered succesfully!" });
-      }).catch((err) => res.status(501).json({ error: err }));
-    }).catch(err => console.log(err));
-});
+//       const user = new User({ email, password });
+
+//       user.save().then(() => {
+//         res.status(201).json({ message: "User registered succesfully!" });
+//       }).catch((err) => res.status(501).json({ error: err }));
+//     }).catch(err => console.log(err));
+// });
 
 // router.post('/signin', (req, res) => {
 //   const { email, password } = req.body;
@@ -38,5 +40,39 @@ router.post('/signup', (req, res) => {
 
 //   User.findOne({ email: email });
 // });
+
+router.post('/signup', async (req, res) => {
+
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(422).json({ error: "Plz fill all fields!" });
+  }
+
+  try {
+    const userExist = await User.findOne({ email: email });
+    if (userExist) {
+      return res.status(422).json({ error: "Email already exists!" });
+    }
+
+    const user = new User({ email, password });
+    const savedUser = user.save();
+
+    if (savedUser) res.status(201).json({ message: "User registered succesfully!" });
+  }
+  catch (err) {
+    console.log(err)
+  }
+
+});
+
+router.post('/signin', (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    return res.status(422).json({ error: "Plz fill all fields!" });
+  }
+
+  User.findOne({ email: email });
+});
 
 module.exports = router;
