@@ -1,5 +1,6 @@
 require('../db/conn');
 const express = require('express');
+const bcrypt = require('bcryptjs');
 const User = require('../models/userSchema');
 
 const router = express.Router();
@@ -82,7 +83,9 @@ router.post('/signin', async (req, res) => {
       res.status(400).json({ error: "User Error" });
     }
     else {
-      res.json({ message: "User signed in succesfully!" });
+      const isPasswordCorrect = await bcrypt.compare(password, userExist.password);
+      if (isPasswordCorrect) res.json({ message: "User signed in succesfully!" });
+      else res.json({ error: "Incorrect username or password" });
     }
 
   } catch (err) {
