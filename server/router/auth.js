@@ -46,7 +46,7 @@ router.post('/signup', async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return res.status(422).json({ error: "Plz fill all fields!" });
+    return res.status(422).json({ error: "Please fill all fields!" });
   }
 
   try {
@@ -66,13 +66,27 @@ router.post('/signup', async (req, res) => {
 
 });
 
-router.post('/signin', (req, res) => {
-  const { email, password } = req.body;
-  if (!email || !password) {
-    return res.status(422).json({ error: "Plz fill all fields!" });
-  }
+router.post('/signin', async (req, res) => {
 
-  User.findOne({ email: email });
+  try {
+
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(422).json({ error: "Please fill all fields!" });
+    }
+
+    const userExist = await User.findOne({ email: email });
+    // console.log(userExist);
+    if (!userExist) {
+      res.status(400).json({ error: "User Error" });
+    }
+    else {
+      res.json({ message: "User signed in succesfully!" });
+    }
+
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 module.exports = router;
