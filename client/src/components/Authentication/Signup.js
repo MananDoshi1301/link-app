@@ -23,6 +23,8 @@ const Signup = () => {
   const PostData = async (e) => {
     e.preventDefault();
     const { email, password } = cred;
+
+
     const response = await fetch("/signup", {
       method: "POST",
       headers: {
@@ -36,11 +38,11 @@ const Signup = () => {
     const res_data = await response.json();
     console.log(res_data)
     if (response.status === 422 || !res_data) {
-      window.alert("Invalid Registration!\nEmail already exists");
+      window.alert("Invalid Registration\n" + res_data.message);
     } else {
-      window.alert("Registration Successful!");
-      // setCred()
+      window.alert(res_data.message);
     }
+
   }
 
   return (
