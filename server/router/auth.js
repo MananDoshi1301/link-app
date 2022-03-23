@@ -85,7 +85,7 @@ router.post('/signin', async (req, res) => {
     else {
       const isPasswordCorrect = await bcrypt.compare(password, userExist.password);
       if (isPasswordCorrect) res.json({ message: "User signed in succesfully!" });
-      else res.json({ error: "Incorrect username or password" });
+      else res.json({ message: "Incorrect username or password" });
     }
 
   } catch (err) {
