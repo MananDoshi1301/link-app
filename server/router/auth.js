@@ -47,13 +47,13 @@ router.post('/signup', async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return res.status(422).json({ error: "Please fill all fields!" });
+    return res.status(422).json({ message: "Please fill all fields!" });
   }
 
   try {
     const userExist = await User.findOne({ email: email });
     if (userExist) {
-      return res.status(422).json({ error: "Email already exists!" });
+      return res.status(422).json({ message: "Email already exists!" });
     }
     else {
       const user = new User({ email, password });
@@ -74,13 +74,13 @@ router.post('/signin', async (req, res) => {
 
     const { email, password } = req.body;
     if (!email || !password) {
-      return res.status(422).json({ error: "Please fill all fields!" });
+      return res.status(422).json({ message: "Please fill all fields!" });
     }
 
     const userExist = await User.findOne({ email: email });
     // console.log(userExist);
     if (!userExist) {
-      res.status(400).json({ error: "User Error" });
+      res.status(400).json({ message: "User Error" });
     }
     else {
       const isPasswordCorrect = await bcrypt.compare(password, userExist.password);
