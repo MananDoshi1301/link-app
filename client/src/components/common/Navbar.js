@@ -41,7 +41,7 @@ const Navbar = ({ details }) => {
   const NavbarComp = () => (
     <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
       <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
-        <Box>My Link App</Box>
+        <Box><Link to={'/'}>My Link App</Link></Box>
 
         <Flex alignItems={'center'}>
           <Stack direction={'row'} spacing={7}>
