@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
 import {
+  Flex,
+  Box,
   FormControl,
   FormLabel,
-  // FormErrorMessage,
-  FormHelperText,
   Input,
+  // Checkbox,
+  Stack,
+  // Link,
   Button,
-  // ButtonGroup
-} from '@chakra-ui/react'
+  Heading,
+  Text,
+  useColorModeValue,
+} from '@chakra-ui/react';
 
 const Signin = () => {
 
@@ -46,29 +51,67 @@ const Signin = () => {
   }
 
   return (
-    <div>
+    <>
+      <Flex
+        minH={'85vh'}
+        align={'center'}
+        justify={'center'}
+        bg={useColorModeValue('gray.50', 'gray.800')}>
+        <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+          <Stack align={'center'}>
+            <Heading fontSize={'4xl'}>Sign in to your account</Heading>
+            <Text fontSize={'lg'} color={'gray.600'}>
 
-      <form method="post">
+            </Text>
+          </Stack>
+          <Box
+            rounded={'lg'}
+            bg={useColorModeValue('white', 'gray.700')}
+            boxShadow={'lg'}
+            p={8}>
+            <form method="post">
 
-        <FormControl isRequired>
-          <FormLabel htmlFor='email'>Email address</FormLabel>
-          <Input id='email' type='email' name={'email'}
-            value={cred.email}
-            onChange={handleInputChange} />
-          <FormHelperText>We'll never share your email.</FormHelperText>
-        </FormControl>
+              <Stack spacing={4}>
 
-        <FormControl isRequired>
-          <FormLabel htmlFor='password'>Password</FormLabel>
-          <Input id='password' type='password' name={'password'}
-            value={cred.password}
-            onChange={handleInputChange} />
-          <FormHelperText>Your password is encrypted!</FormHelperText>
-        </FormControl>
+                <FormControl isRequired>
+                  <FormLabel htmlFor='email'>Email address</FormLabel>
+                  <Input id='email' type='email' name={'email'}
+                    value={cred.email}
+                    onChange={handleInputChange} />
+                </FormControl>
 
-        <Button onClick={PostData} colorScheme='blue'>Button</Button>
-      </form>
-    </div>
+
+                <FormControl isRequired>
+                  <FormLabel htmlFor='password'>Password</FormLabel>
+                  <Input id='password' type='password' name={'password'}
+                    value={cred.password}
+                    onChange={handleInputChange} />
+                </FormControl>
+                <Stack spacing={10}>
+                  {/* <Stack
+                  direction={{ base: 'column', sm: 'row' }}
+                  align={'start'}
+                  justify={'space-between'}>
+                  <Checkbox>Remember me</Checkbox>
+                  <Link color={'blue.400'}>Forgot password?</Link>
+                </Stack> */}
+                  <Button
+                    onClick={PostData}
+                    bg={'blue.400'}
+                    color={'white'}
+                    _hover={{
+                      bg: 'blue.500',
+                    }}>
+                    Sign in
+                  </Button>
+                </Stack>
+              </Stack>
+            </form>
+
+          </Box>
+        </Stack>
+      </Flex>
+    </>
   )
 }
 
