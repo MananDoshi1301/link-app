@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import {
   Flex,
   Box,
@@ -21,6 +22,8 @@ const Signup = () => {
     email: "",
     password: ""
   })
+
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     setCred({ ...cred, [e.target.name]: e.target.value });
@@ -47,6 +50,8 @@ const Signup = () => {
       window.alert("Invalid Registration\n" + res_data.message);
     } else {
       window.alert(res_data.message);
+      navigate(-1);
+      navigate('./signin');
     }
 
   }
