@@ -74,18 +74,18 @@ router.post('/signin', async (req, res) => {
 
     const { email, password } = req.body;
     if (!email || !password) {
-      return res.status(422).json({ message: "Please fill all fields!" });
+      return res.status(422).json({ message: "Please fill all fields!", error: true });
     }
 
     const userExist = await User.findOne({ email: email });
-    // console.log(userExist);
+    console.log(userExist._id);
     if (!userExist) {
-      res.status(400).json({ message: "User Error" });
+      res.status(400).json({ message: "User Error", error: true });
     }
     else {
       const isPasswordCorrect = await bcrypt.compare(password, userExist.password);
-      if (isPasswordCorrect) res.json({ message: "User signed in succesfully!" });
-      else res.json({ message: "Incorrect username or password" });
+      if (isPasswordCorrect) res.json({ message: "User signed in succesfully!", id: userExist._id, error: false });
+      else res.json({ message: "Incorrect username or password", error: true });
     }
 
   } catch (err) {
