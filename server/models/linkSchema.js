@@ -1,15 +1,15 @@
 const mongoose = require('mongoose');
 
 const linkSchema = new mongoose.Schema({
-  userId: {
-    type: ObjectId,
+  userid: {
+    type: String,
     required: true,
   },
   title: {
     type: String,
     required: true
   },
-  urlLink: {
+  url: {
     type: String,
     required: true
   }
