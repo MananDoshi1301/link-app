@@ -5,6 +5,8 @@ import Signin from './components/Authentication/Signin';
 import Signup from './components/Authentication/Signup';
 import Navbar from './components/common/Navbar';
 import Home from './components/Home';
+import LinkPage from './components/LinkPage/LinkPage';
+import AddLink from './components/LinkPage/AddLink';
 
 function App() {
 
@@ -15,11 +17,13 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Navbar details={details} />
+        <Navbar details={details} setDetails={setDetails} />
         <Routes>
-          <Route path={'/'} element={<Home />}></Route>
           <Route path={'/signup'} element={<Signup />}></Route>
-          <Route path={'/signin'} element={<Signin />}></Route>
+          <Route path={'/signin'} element={<Signin setDetails={setDetails} />}></Route>
+          <Route path={'/link-page/add-link'} element={<AddLink />}></Route>
+          <Route path={'/link-page'} element={<LinkPage />}></Route>
+          <Route path={'/'} element={<Home />}></Route>
         </Routes>
       </Router>
     </div>
