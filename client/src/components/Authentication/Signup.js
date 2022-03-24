@@ -50,8 +50,7 @@ const Signup = () => {
       window.alert("Invalid Registration\n" + res_data.message);
     } else {
       window.alert(res_data.message);
-      navigate(-1);
-      navigate('./signin');
+      navigate('/signin');
     }
 
   }
