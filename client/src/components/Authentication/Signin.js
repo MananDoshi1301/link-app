@@ -13,13 +13,16 @@ import {
   Text,
   useColorModeValue,
 } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 
-const Signin = () => {
+const Signin = ({ setDetails }) => {
 
   const [cred, setCred] = useState({
     email: "",
     password: ""
   })
+
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     setCred({ ...cred, [e.target.name]: e.target.value });
@@ -46,6 +49,10 @@ const Signin = () => {
       window.alert("Invalid Login\n" + res_data.message);
     } else {
       window.alert(res_data.message);
+      if (res_data.error === false) {
+        setDetails({ email: email, id: res_data.id });
+        navigate("/link-page");
+      }
     }
 
   }
