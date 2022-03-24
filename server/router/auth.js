@@ -2,6 +2,7 @@ require('../db/conn');
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const User = require('../models/userSchema');
+const Links = require('../models/linkSchema');
 
 const router = express.Router();
 
@@ -89,6 +90,28 @@ router.post('/signin', async (req, res) => {
     }
 
   } catch (err) {
+    console.log(err);
+  }
+});
+
+router.post('/link-page/add-link', async (req, res) => {
+
+  try {
+    const { userid, title, url } = req.body;
+    if (!userid || !title || !url) {
+      return res.status(422).json({
+        error: true, message: "Please fill all details",
+      });
+    }
+
+    const linkDoc = new Links({ userid, title, url });
+    const savedDoc = await linkDoc.save();
+    if (savedDoc) res.status(201).json({
+      message: "Link saved succesfully", error: false
+    })
+
+  }
+  catch (err) {
     console.log(err);
   }
 });
