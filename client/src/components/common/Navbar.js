@@ -17,9 +17,9 @@ import {
   Center,
 } from '@chakra-ui/react';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-const Navbar = ({ details }) => {
+const Navbar = ({ details, setDetails }) => {
 
   const { colorMode, toggleColorMode } = useColorMode();
   // const { isOpen, onOpen, onClose } = useDisclosure();
@@ -38,6 +38,32 @@ const Navbar = ({ details }) => {
   //   </Link>
   // );
 
+  const navigate = useNavigate();
+
+
+  const AddLink = () => (
+    // <Flex h="100vh" justifyContent="center" alignItems="center">
+    <Button
+      /* flex={1} */
+      px={4}
+      fontSize={'sm'}
+      rounded={'full'}
+      bg={'blue.400'}
+      color={'white'}
+      boxShadow={
+        '0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)'
+      }
+      _hover={{
+        bg: 'blue.500',
+      }}
+      _focus={{
+        bg: 'blue.500',
+      }}>
+      Add Link
+    </Button>
+    // </Flex>
+  );
+
   const NavbarComp = () => (
     <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
       <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
@@ -45,9 +71,13 @@ const Navbar = ({ details }) => {
 
         <Flex alignItems={'center'}>
           <Stack direction={'row'} spacing={7}>
+
+
             <Button onClick={toggleColorMode}>
               {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
             </Button>
+
+            {details.email !== "user" && <Link to={"./link-page/add-link"}><AddLink /></Link>}
 
             <Menu>
               <MenuButton
@@ -83,7 +113,14 @@ const Navbar = ({ details }) => {
                     </>
                   ) : (
                     <>
-                      <MenuItem>Logout</MenuItem>
+                      <MenuItem
+                        onClick={() => {
+                          setDetails({
+                            email: "user", id: ""
+                          });
+                          navigate("/");
+                        }
+                        }>Logout</MenuItem>
                     </>
                   )
                 }
