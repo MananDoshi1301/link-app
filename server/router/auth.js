@@ -103,7 +103,10 @@ router.get('/link-page/:id', async (req, res) => {
   try {
     const data = await Links.find({ userid: req.params.id });
     // console.log(data);
-    res.json({ message: "success", data: data[0].links })
+    res.json({
+      message: "success",
+      data: data[0].links
+    })
   } catch (err) {
     console.log(err);
   }
