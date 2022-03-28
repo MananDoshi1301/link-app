@@ -102,7 +102,7 @@ router.post('/link-page/add-link', async (req, res) => {
   try {
     const { userid, links } = req.body;
     const { title, url } = links;
-    // console.log(userid, title, url)
+    console.log(userid, title, url)
     if (!userid || !title || !url) {
       return res.status(422).json({
         error: true, message: "Please fill all details",

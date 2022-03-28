@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import {
   Button,
@@ -11,7 +11,44 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 
-const AddLink = () => {  
+const AddLink = ({userid}) => {
+  
+  const [linkDet, setLinkDet] = useState({
+    title:"", url:""
+  })
+
+  const handleInputChange = (e) => {
+    setLinkDet({ ...linkDet, [e.target.name]: e.target.value });
+  }
+
+  const PostData = async (e) => {
+    e.preventDefault();
+    const { title, url } = linkDet;
+    // console.log(title, url);
+
+    const response = await fetch("/link-page/add-link", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        userid:userid,
+        links:{title, url}
+      })
+    });
+
+    const res_data = await response.json();
+    // console.log(res_data)
+    if (response.status === 422 || !res_data) {
+      window.alert("Error\n" + res_data.message);
+    } else {
+      // window.alert(res_data.message);
+      if (res_data.error === false) {     
+        window.alert(res_data.message);
+      }
+    }
+
+  }
 
   return (
     <>
@@ -34,18 +71,24 @@ const AddLink = () => {
         </Heading>
 
 
-        <FormControl id="password" isRequired>
-          <FormLabel>Title</FormLabel>
-          <Input type="password" />
+        <FormControl isRequired>
+          <FormLabel htmlFor='title'>Title</FormLabel>
+          <Input id="title" name='title' value={linkDet.title}
+          onChange={handleInputChange}
+           type="text" />
         </FormControl>
 
         
-        <FormControl id="email" isRequired>
+        <FormControl isRequired>
           <FormLabel>URL</FormLabel>
           <Input
-            // placeholder="your-email@example.com"
+          name='url' 
+          value={linkDet.url}
+
+            placeholder="test_example.com"
+            onChange={handleInputChange}
             _placeholder={{ color: 'gray.500' }}
-            type="email"
+            type="url"
           />
         </FormControl>
 
@@ -54,6 +97,7 @@ const AddLink = () => {
 
         <Stack spacing={6}>
           <Button
+            onClick={PostData}
             bg={'blue.400'}
             color={'white'}
             _hover={{
