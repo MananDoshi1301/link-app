@@ -22,7 +22,7 @@ function App() {
           <Route path={'/signup'} element={<Signup />}></Route>
           <Route path={'/signin'} element={<Signin setDetails={setDetails} />}></Route>
           <Route path={'/link-page/add-link'} element={<AddLink userid={details.id} />}></Route>
-          <Route path={'/link-page'} element={<LinkPage />}></Route>
+          <Route path={'/link-page'} element={<LinkPage userid={details.id} />}></Route>
           <Route path={'/'} element={<Home />}></Route>
         </Routes>
       </Router>

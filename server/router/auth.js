@@ -97,12 +97,25 @@ router.post('/signin', async (req, res) => {
   }
 });
 
+router.get('/link-page/:id', async (req, res) => {
+  // console.log(req.params.id)
+
+  try {
+    const data = await Links.find({ userid: req.params.id });
+    // console.log(data);
+    res.json({ message: "success", data: data[0].links })
+  } catch (err) {
+    console.log(err);
+  }
+  // res.json({ message: 'done' })
+})
+
 router.post('/link-page/add-link', async (req, res) => {
 
   try {
     const { userid, links } = req.body;
     const { title, url } = links;
-    console.log(userid, title, url)
+    // console.log(userid, title, url)
     if (!userid || !title || !url) {
       return res.status(422).json({
         error: true, message: "Please fill all details",
