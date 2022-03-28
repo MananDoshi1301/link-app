@@ -7,10 +7,13 @@ const Links = require('../models/linkSchema');
 const router = express.Router();
 
 
-router.get('/', (req, res) => {
-  res.send("Hello from server in route!");
-})
+// router.get('/', (req, res) => {
+//   res.send("Hello from server in route!");
+// })
 
+const print = (content) => {
+  console.log(content);
+}
 
 // Using promises
 
@@ -42,10 +45,6 @@ router.get('/', (req, res) => {
 
 //   User.findOne({ email: email });
 // });
-const print = (content) => {
-  console.log(content);
-}
-
 
 router.post('/signup', async (req, res) => {
 
@@ -114,7 +113,7 @@ router.post('/link-page/add-link', async (req, res) => {
     // res.json({ id: userid })
 
     if (doesUserDocExist.length == 0) {
-      print("Adding new doc")
+      // print("Adding new doc")
       const linkDoc = new Links({ userid, links: [{ title, url }] });
       const savedDoc = await linkDoc.save();
 
@@ -123,7 +122,7 @@ router.post('/link-page/add-link', async (req, res) => {
       })
     }
     else {
-      print("Updating doc")
+      // print("Updating doc")
       const savedDoc = await Links.findOneAndUpdate({
         userid: userid
       }, {
