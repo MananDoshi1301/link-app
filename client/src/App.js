@@ -7,6 +7,7 @@ import Navbar from './components/common/Navbar';
 import Home from './components/Home';
 import LinkPage from './components/LinkPage/LinkPage';
 import AddLink from './components/LinkPage/AddLink';
+import ErrorPage from './components/ErrorPage';
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
           <Route path={'/link-page/add-link'} element={<AddLink userid={details.id} />}></Route>
           <Route path={'/link-page'} element={<LinkPage userid={details.id} />}></Route>
           <Route path={'/'} element={<Home />}></Route>
+          <Route path='*' element={<ErrorPage />}></Route>
         </Routes>
       </Router>
     </div>
