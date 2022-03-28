@@ -42,6 +42,10 @@ router.get('/', (req, res) => {
 
 //   User.findOne({ email: email });
 // });
+const print = (content) => {
+  console.log(content);
+}
+
 
 router.post('/signup', async (req, res) => {
 
@@ -97,18 +101,42 @@ router.post('/signin', async (req, res) => {
 router.post('/link-page/add-link', async (req, res) => {
 
   try {
-    const { userid, title, url } = req.body;
+    const { userid, links } = req.body;
+    const { title, url } = links;
+    // console.log(userid, title, url)
     if (!userid || !title || !url) {
       return res.status(422).json({
         error: true, message: "Please fill all details",
       });
     }
 
-    const linkDoc = new Links({ userid, title, url });
-    const savedDoc = await linkDoc.save();
-    if (savedDoc) res.status(201).json({
-      message: "Link saved succesfully", error: false
-    })
+    const doesUserDocExist = await Links.find({ userid: userid });
+    // res.json({ id: userid })
+
+    if (doesUserDocExist.length == 0) {
+      print("Adding new doc")
+      const linkDoc = new Links({ userid, links: [{ title, url }] });
+      const savedDoc = await linkDoc.save();
+
+      if (savedDoc) res.status(201).json({
+        message: "Link added succesfully", error: false
+      })
+    }
+    else {
+      print("Updating doc")
+      const savedDoc = await Links.findOneAndUpdate({
+        userid: userid
+      }, {
+        $push: {
+          links: { title, url },
+        }
+      })
+
+      if (savedDoc) res.status(201).json({
+        message: "Link saved succesfully", error: false
+      })
+    }
+
 
   }
   catch (err) {
