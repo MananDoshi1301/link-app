@@ -82,7 +82,7 @@ router.post('/signin', async (req, res) => {
     }
 
     const userExist = await User.findOne({ email: email });
-    console.log(userExist._id);
+    // console.log(userExist._id);
     if (!userExist) {
       res.status(400).json({ message: "User Error", error: true });
     }

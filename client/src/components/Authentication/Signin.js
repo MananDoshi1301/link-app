@@ -50,7 +50,10 @@ const Signin = ({ setDetails }) => {
     } else {
       window.alert(res_data.message);
       if (res_data.error === false) {
-        setDetails({ email: email, id: res_data.id });
+        sessionStorage.setItem("details", JSON.stringify({
+          email: email, id: res_data.id, isLoggedIn: true,
+        }))
+        setDetails({ email: email, id: res_data.id, isLoggedIn: true });
         navigate("/link-page");
       }
     }

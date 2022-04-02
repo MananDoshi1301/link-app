@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Box,
   Flex,
@@ -16,7 +16,7 @@ import {
   useColorMode,
   Center,
 } from '@chakra-ui/react';
-import { MoonIcon, SunIcon } from '@chakra-ui/icons';
+import { MoonIcon, SunIcon, LinkIcon } from '@chakra-ui/icons';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = ({ details, setDetails }) => {
@@ -40,6 +40,23 @@ const Navbar = ({ details, setDetails }) => {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const checkLogIn = () => {
+      const session = JSON.parse(sessionStorage.getItem('details'));
+      if (details.isLoggedIn === false && session === null) {
+        navigate("/please-log-in");
+        return 0;
+      }
+      if (!details.id) {
+        setDetails({
+          email: session.email,
+          id: session.id,
+          isLoggedIn: true,
+        })
+      }
+    }
+    checkLogIn();
+  })
 
   const AddLink = () => (
     // <Flex h="100vh" justifyContent="center" alignItems="center">
@@ -67,7 +84,14 @@ const Navbar = ({ details, setDetails }) => {
   const NavbarComp = () => (
     <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
       <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
-        <Box><Link to={'/'}>My Link App</Link></Box>
+
+        <Box><Link to={
+          // () => (
+          // JSON.parse(sessionStorage.getItem('details') === null ? '/' : '/link-page')
+          // )
+          '/'
+        }>
+          <LinkIcon /></Link></Box>
 
         <Flex alignItems={'center'}>
           <Stack direction={'row'} spacing={7}>
@@ -101,7 +125,7 @@ const Navbar = ({ details, setDetails }) => {
                 </Center>
                 <br />
                 <Center>
-                  <p>{`Hello ${details.email}!`}</p>
+                  <p>{`Hello ${details.email.split('@')[0]}!`}</p>
                 </Center>
                 <br />
                 <MenuDivider />
@@ -115,8 +139,9 @@ const Navbar = ({ details, setDetails }) => {
                     <>
                       <MenuItem
                         onClick={() => {
+                          sessionStorage.clear();
                           setDetails({
-                            email: "user", id: ""
+                            email: "user", id: "", isLoggedIn: "false"
                           });
                           navigate("/");
                         }

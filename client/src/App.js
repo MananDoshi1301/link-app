@@ -12,7 +12,7 @@ import ErrorPage from './components/ErrorPage';
 function App() {
 
   const [details, setDetails] = useState({
-    email: "user", id: ""
+    email: "user", id: "", isLoggedIn: false
   })
 
   return (
@@ -20,12 +20,18 @@ function App() {
       <Router>
         <Navbar details={details} setDetails={setDetails} />
         <Routes>
-          <Route path={'/signup'} element={<Signup />}></Route>
-          <Route path={'/signin'} element={<Signin setDetails={setDetails} />}></Route>
-          <Route path={'/link-page/add-link'} element={<AddLink userid={details.id} />}></Route>
-          <Route path={'/link-page'} element={<LinkPage userid={details.id} />}></Route>
-          <Route path={'/'} element={<Home />}></Route>
-          <Route path='*' element={<ErrorPage />}></Route>
+
+          <Route path={'/signup'} element={<Signup />} />
+
+          <Route path={'/signin'} element={<Signin setDetails={setDetails} />} />
+
+          <Route path={'/link-page/add-link'} element={<AddLink userid={details.id} />} />
+
+          <Route path={'/link-page'} element={<LinkPage details={details} setDetails={setDetails} />} />
+
+          <Route path={'/'} element={<Home />} />
+
+          <Route path='*' element={<ErrorPage />} />
         </Routes>
       </Router>
     </div>
