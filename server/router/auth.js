@@ -97,18 +97,24 @@ router.post('/signin', async (req, res) => {
   }
 });
 
-router.post('/deleteLink', async (req, res) => {
-  const { linkId } = req.body;
-  if (!linkId) return res.status(422).json({ message: "Invalid LinkId!", error: true });
+router.post('/link-page/delete-link', async (req, res) => {
 
   try {
-    const delLinkres = Links.findByIdAndDelete(linkId, (err, docs) => {
-      if (err) console.log(err);
-      else console.log("Deleted " + docs);
-    })
-    // console.log(delLinkres);
-    res.status(201).json({ message: "Deleted", data: delLinkres })
+    const { userId, linkId } = req.body;
 
+    if (!userId) return res.status(422).json({ message: "Cannot retrieve user id!", error: true });
+
+    if (!linkId) return res.status(422).json({ message: "Invalid LinkId!", error: true });
+
+    const linkDelete = await Links.updateOne({ userid: userId }, {
+      $pull: {
+        links: {
+          "_id": linkId
+        }
+      }
+    })
+
+    res.status(201).json({ message: "Executed", data: linkDelete });
   } catch (error) {
     console.log(error);
   }
