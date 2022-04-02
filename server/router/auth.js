@@ -97,6 +97,23 @@ router.post('/signin', async (req, res) => {
   }
 });
 
+router.post('/deleteLink', async (req, res) => {
+  const { linkId } = req.body;
+  if (!linkId) return res.status(422).json({ message: "Invalid LinkId!", error: true });
+
+  try {
+    const delLinkres = Links.findByIdAndDelete(linkId, (err, docs) => {
+      if (err) console.log(err);
+      else console.log("Deleted " + docs);
+    })
+    // console.log(delLinkres);
+    res.status(201).json({ message: "Deleted", data: delLinkres })
+
+  } catch (error) {
+    console.log(error);
+  }
+})
+
 router.get('/link-page/:id', async (req, res) => {
   // console.log(req.params.id)
 

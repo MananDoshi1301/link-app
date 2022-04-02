@@ -44,7 +44,7 @@ const Navbar = ({ details, setDetails }) => {
     const checkLogIn = () => {
       const session = JSON.parse(sessionStorage.getItem('details'));
       if (details.isLoggedIn === false && session === null) {
-        navigate("/please-log-in");
+        // navigate("/please-log-in");
         return 0;
       }
       if (!details.id) {
