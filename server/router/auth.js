@@ -114,7 +114,11 @@ router.post('/link-page/delete-link', async (req, res) => {
       }
     })
 
-    res.status(201).json({ message: "Executed", data: linkDelete });
+    if (linkDelete.modifiedCount === 1 && linkDelete.matchedCount === 1)
+      res.status(201).json({ message: "Link Deleted Succesfully", error: false });
+    else {
+
+    }
   } catch (error) {
     console.log(error);
   }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DisplayLinks from './DisplayLinks';
+import NoLinks from './NoLinks';
 
 
 const LinkPage = ({ details, setDetails }) => {
@@ -26,6 +27,31 @@ const LinkPage = ({ details, setDetails }) => {
     }
   }, [details.id])
 
+  const deleteLink = async (linkId) => {
+
+    try {
+
+      const res = await fetch('/link-page/delete-link', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          linkId, userId: details.id
+        })
+      });
+
+      const res_data = await res.json();
+      if (res_data.error === false) {
+        window.location.reload();
+      }
+      console.log(res_data);
+
+    } catch (error) {
+
+    }
+  }
+
   useEffect(() => {
 
     const session = JSON.parse(sessionStorage.getItem('details'));
@@ -49,7 +75,12 @@ const LinkPage = ({ details, setDetails }) => {
 
   return (
     <>
-      <DisplayLinks linkData={linkData} />
+      {
+        linkData.length !== 0 ?
+          (<DisplayLinks linkData={linkData} deleteLink={deleteLink} />) : (
+            <NoLinks />
+          )
+      }
     </>
   )
 }
