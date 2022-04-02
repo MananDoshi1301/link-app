@@ -40,21 +40,21 @@ const Navbar = ({ details, setDetails }) => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const checkLogIn = () => {
-      const session = JSON.parse(sessionStorage.getItem('details'));
-      if (details.isLoggedIn === false && session === null) {
-        // navigate("/please-log-in");
-        return 0;
-      }
-      if (!details.id) {
-        setDetails({
-          email: session.email,
-          id: session.id,
-          isLoggedIn: true,
-        })
-      }
+  const checkLogIn = () => {
+    const session = JSON.parse(sessionStorage.getItem('details'));
+    if (details.isLoggedIn === false && session === null) {
+      // navigate("/");
+      return 0;
     }
+    else if (details.isLoggedIn === true && !details.id) {
+      setDetails({
+        email: session.email,
+        id: session.id,
+        isLoggedIn: true,
+      })
+    }
+  }
+  useEffect(() => {
     checkLogIn();
   })
 
