@@ -85,13 +85,15 @@ const Navbar = ({ details, setDetails }) => {
     <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
       <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
 
-        <Box><Link to={
-          // () => (
-          // JSON.parse(sessionStorage.getItem('details') === null ? '/' : '/link-page')
-          // )
-          '/'
-        }>
-          <LinkIcon /></Link></Box>
+        <Box
+          style={{ "cursor": "pointer" }}
+          onClick={() => {
+            checkLogIn();
+            details.isLoggedIn ? navigate('/link-page') : navigate('/')
+          }}
+        >
+          <LinkIcon />
+        </Box>
 
         <Flex alignItems={'center'}>
           <Stack direction={'row'} spacing={7}>
