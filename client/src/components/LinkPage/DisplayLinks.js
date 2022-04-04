@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import {
   Stack, Text, Button, useToast,
+  Box,
   Tooltip,
   AlertDialog,
   AlertDialogBody,
@@ -22,7 +23,17 @@ const DisplayLinks = ({ linkData = [], deleteLink }) => {
 
   const [delLink, setDelLink] = useState({});
 
-  const LinkCard = ({ title = "Sample", urlParam = "www.test.com", linkId = "", isValidUrl = false }) => {
+  const getDateString = (stamp) => {
+
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    const date = new Date(stamp);
+
+    const str = `${date.getDate()} ${months[date.getMonth()]}, ${date.getFullYear()} at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+    return str;
+  }
+
+  const LinkCard = ({ title = "Sample", urlParam = "www.test.com", linkId = "", isValidUrl = false, createdAt }) => {
 
     const RedirectBtn = () => (
       <Button
@@ -41,16 +52,29 @@ const DisplayLinks = ({ linkData = [], deleteLink }) => {
     return (
       <>
         <Stack p="4" boxShadow="lg" m="4" borderRadius="sm">
-          <Stack direction="row" alignItems="center">
+          <Stack direction={{ base: 'column', md: 'row' }}
+            // mb={3}
+            justifyContent="space-between">
             <Text fontWeight="bold">{title}</Text>
           </Stack>
 
           <Stack
             direction={{ base: 'column', md: 'row' }}
-            justifyContent="space-between">
-            <Text fontSize={{ base: 'sm' }} textAlign={'left'} maxW={'4xl'}>
-              {urlParam}
-            </Text>
+            justifyContent="space-between"
+          >
+            <Box>
+              <Text fontSize={{ base: 'sm' }} textAlign={'left'} maxW={'4xl'}>
+                {urlParam}
+              </Text>
+              <Text
+                fontSize={{ base: 'sm' }}
+                fontWeight="bold"
+                textAlign={'left'} maxW={'4xl'}
+                mt={2}
+              >
+                Created: {getDateString(createdAt)}
+              </Text>
+            </Box>
             <Stack direction={{ base: 'column', md: 'row' }}>
               {/* Copy btn */}
               <Button variant="solid" colorScheme="blue"
@@ -103,6 +127,8 @@ const DisplayLinks = ({ linkData = [], deleteLink }) => {
                 colorScheme="red"><DeleteIcon /></Button>
             </Stack>
           </Stack>
+
+
         </Stack>
 
         <AlertDialog
@@ -152,6 +178,7 @@ const DisplayLinks = ({ linkData = [], deleteLink }) => {
             linkId={item._id}
             isValidUrl={item.isValidUrl}
             key={key}
+            createdAt={item.createdAt}
           />
         ))
       }
