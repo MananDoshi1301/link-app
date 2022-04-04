@@ -9,6 +9,14 @@ const LinkPage = ({ details, setDetails }) => {
   const [linkData, setLinkData] = useState([]);
   const navigate = useNavigate();
 
+  window.onload = function () {
+    if (!window.location.hash) {
+      // window.alert('ONLOAD')
+      window.location = window.location + '#loaded';
+      window.location.reload();
+    }
+  }
+
   const getLinks = useCallback(async () => {
 
     try {
@@ -43,9 +51,13 @@ const LinkPage = ({ details, setDetails }) => {
 
       const res_data = await res.json();
       if (res_data.error === false) {
-        window.location.reload();
+        // window.alert('DELETE');
+        window.location = window.location + '#loaded';
+        navigate(0)
+      } else {
+
       }
-      console.log(res_data);
+      // console.log(res_data);
 
     } catch (error) {
 
@@ -76,7 +88,7 @@ const LinkPage = ({ details, setDetails }) => {
   return (
     <>
       {
-        linkData.length !== 0 ?
+        (linkData && linkData.length !== 0) ?
           (<DisplayLinks linkData={linkData} deleteLink={deleteLink} />) : (
             <NoLinks />
           )

@@ -129,11 +129,21 @@ router.get('/link-page/:id', async (req, res) => {
 
   try {
     const data = await Links.find({ userid: req.params.id });
-    // console.log(data);
-    res.json({
-      message: "success",
-      data: data[0].links
-    })
+    // res.json(data);
+    // console.log(req.params.id);
+    if (data.length === 0) {
+      res.status(404).json({
+        message: "User does not exist",
+        error: true
+      })
+    }
+    else {
+      res.json({
+        message: "success",
+        error: false,
+        data: data[0].links
+      })
+    }
   } catch (err) {
     console.log(err);
   }
