@@ -31,6 +31,10 @@ const linkSchema = new mongoose.Schema({
             type: String,
             required: true,
           },
+          isValidUrl: {
+            type: Boolean,
+            required: true,
+          }
         }, { timestamps: true }
       )
     }

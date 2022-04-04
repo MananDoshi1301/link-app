@@ -154,7 +154,7 @@ router.post('/link-page/add-link', async (req, res) => {
 
   try {
     const { userid, links } = req.body;
-    const { title, url } = links;
+    const { title, url, isValidUrl } = links;
     // console.log(userid, title, url)
     if (!userid || !title || !url) {
       return res.status(422).json({
@@ -167,7 +167,7 @@ router.post('/link-page/add-link', async (req, res) => {
 
     if (doesUserDocExist.length == 0) {
       // print("Adding new doc")
-      const linkDoc = new Links({ userid, links: [{ title, url }] });
+      const linkDoc = new Links({ userid, links: [{ title, url, isValidUrl }] });
       const savedDoc = await linkDoc.save();
 
       if (savedDoc) res.status(201).json({
@@ -180,7 +180,7 @@ router.post('/link-page/add-link', async (req, res) => {
         userid: userid
       }, {
         $push: {
-          links: { title, url },
+          links: { title, url, isValidUrl },
         }
       })
 

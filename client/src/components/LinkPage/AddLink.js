@@ -21,9 +21,16 @@ const AddLink = ({userid}) => {
     setLinkDet({ ...linkDet, [e.target.name]: e.target.value });
   }
 
+  const checkUrlValidity = (url) => {
+    const matchpattern = /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/gm;
+
+    return matchpattern.test(url);
+  }
+
   const PostData = async (e) => {
     e.preventDefault();
     const { title, url } = linkDet;
+    const isValidUrl = checkUrlValidity(url);
     // console.log(title, url);
 
     const response = await fetch("/link-page/add-link", {
@@ -33,7 +40,7 @@ const AddLink = ({userid}) => {
       },
       body: JSON.stringify({
         userid:userid,
-        links:{title, url}
+        links:{title, url, isValidUrl}
       })
     });
 
