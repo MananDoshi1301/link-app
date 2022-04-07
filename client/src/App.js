@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Signin from './components/Authentication/Signin';
 import Signup from './components/Authentication/Signup';
 import Navbar from './components/common/Navbar';
+import Footer from './components/common/Footer';
 import Home from './components/Home';
 import LinkPage from './components/LinkPage/LinkPage';
 import AddLink from './components/LinkPage/AddLink';
@@ -33,6 +34,7 @@ function App() {
 
           <Route path='*' element={<ErrorPage />} />
         </Routes>
+        <Footer />
       </Router>
     </div>
   );
