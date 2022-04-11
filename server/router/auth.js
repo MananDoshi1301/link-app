@@ -7,9 +7,9 @@ const Links = require('../models/linkSchema');
 const router = express.Router();
 
 
-// router.get('/', (req, res) => {
-//   res.send("Hello from server in route!");
-// })
+router.get('/', (req, res) => {
+  res.send("Hello from server in route!");
+})
 
 const print = (content) => {
   console.log(content);
