@@ -50,7 +50,8 @@ const AddLink = ({userid}) => {
       window.alert("Error\n" + res_data.message);
     } else {
       // window.alert(res_data.message);
-      if (res_data.error === false) {     
+      if (res_data.error === false) { 
+        setLinkDet({title:"", url:""})    
         window.alert(res_data.message);
       }
     }
