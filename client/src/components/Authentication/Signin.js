@@ -33,7 +33,7 @@ const Signin = ({ setDetails }) => {
     const { email, password } = cred;
 
 
-    const response = await fetch("/signin", {
+    const response = await fetch(process.env.REACT_APP_API + "/signin", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
