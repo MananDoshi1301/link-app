@@ -34,6 +34,6 @@ app.get('/signup', (req, res) => {
   res.send("Hello to signup from server!");
 })
 
-app.listen(process.env.PORT || PORT, () => {
+app.listen(process.env.PORT || 5000, () => {
   console.log(`Server is running on port ${PORT}!`);
 })
