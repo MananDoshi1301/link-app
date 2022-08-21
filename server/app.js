@@ -17,6 +17,14 @@ app.use(express.json());
 
 app.use(require('./router/auth'));
 
+app.get('/signup', (req, res) => {
+  res.send("Hello to signup from server!");
+})
+
+app.listen(process.env.PORT || 5000, () => {
+  console.log(`Server is running on port ${PORT}!`);
+})
+
 // app.get('/', (req, res) => {
 //   res.send("Hello from server in app!");
 // })
@@ -29,11 +37,3 @@ app.use(require('./router/auth'));
 //   console.log(req.body);
 //   res.json({ message: req.body });
 // })
-
-app.get('/signup', (req, res) => {
-  res.send("Hello to signup from server!");
-})
-
-app.listen(process.env.PORT || 5000, () => {
-  console.log(`Server is running on port ${PORT}!`);
-})
